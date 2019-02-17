@@ -1,6 +1,6 @@
 import random
 
-start = {'bitcoins': 10000, 'staff': 100, 'territory': 150, 'gigabytes': 10000, 'working conditions': 5, 'quarter': 0}
+start = {'bitcoins': 10000, 'staff': 100, 'shops': 5, 'gigabytes': 10000, 'working conditions': 5, 'quarter': 1}
 
 
 def selling():
