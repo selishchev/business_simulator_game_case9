@@ -1,9 +1,9 @@
 import random
-import sys
 from tkinter import *
 
 start = {'bitcoins': 10000, 'staff': 100, 'shops': 5, 'gigabytes': 10000, 'working conditions': 95, 'quarter': 0}
 tech = 0
+
 
 def selling():
     """Information about selling"""
@@ -16,7 +16,7 @@ def selling():
                'gigabytes': start.get('gigabytes', []) - amount1}
     update3 = {'bitcoins': start.get('bitcoins', []) + _max1 * price1,
                'gigabytes': start.get('gigabytes', []) - _max1}
-    if amount1 < start.get('gigabytes', []):
+    if amount1 <= start.get('gigabytes', []):
         start.update(update2)
     else:
         print('Вы не можете столько продать, максимум:', _max1)
@@ -47,16 +47,14 @@ def investments():
     _max2 = start.get('gigabytes', [])
     update4 = {'gigabytes': start.get('gigabytes', []) - gb}
     update5 = {'gigabytes': 0}
-    if gb < _max2:
+    if gb <= _max2:
         start.update(update4)
         global tech
         tech += gb
     else:
         print('Вы не можете столько инвестировать, максимум:', _max2)
         start.update(update5)
-        global tech
         tech += _max2
-
 
 
 def salaries():
@@ -74,7 +72,7 @@ def salaries():
     update9 = {'working conditions': start.get('working conditions', []) - rand1}
     update10 = {'working conditions': start.get('working conditions', []) + rand1}
     update11 = {'working conditions': start.get('working conditions', []) + rand0}
-    if sal < _max3:
+    if sal <= _max3:
         start.update(update6)
     else:
         print('Вы не можете столько заплатить, максимум:', _max3)
@@ -91,9 +89,17 @@ def salaries():
 
 
 def staff():
-
-
-def shops():
+    rand = random.randint(30, 80)
+    rand1 = random.randint(1, 30)
+    update = {'staff': start.get('staff', []) - rand}
+    update1 = {'staff': start.get('staff', []) - rand1}
+    update2 = {'staff': start.get('staff', []) + rand}
+    if start.get('working conditions', []) <= 40:
+        start.update(update)
+    elif 41 <= start.get('working conditions', []) <= 80:
+        start.update(update1)
+    elif 100 <= start.get('working conditions', []):
+        start.update(update2)
 
 
 def random_inv():
@@ -115,11 +121,16 @@ def loss():
         print('Никто не хочет работать в вашей компании. Игра окончена.')
         sys.exit()
     if start.get('shops', []) <= 0:
-        print('Все ваши магазины закрылись. Игра окончена')
+        print('Все ваши магазины закрыты. Игра окончена')
         sys.exit()
     if start.get('staff', []) <= 0:
         print('Все работники ушли от вас. Игра окончена')
         sys.exit()
+
+
+def counter():
+    update = {'quarter': start.get('quarter', []) + 1}
+    start.update(update)
 
 
 print(start)
@@ -132,5 +143,7 @@ print(start)
 salaries()
 print(start)
 random_inv()
+staff()
 print(start)
 loss()
+counter()
