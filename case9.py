@@ -1,5 +1,5 @@
 import random
-from tkinter import *
+import sys
 
 start = {'bitcoins': 10000, 'staff': 100, 'shops': 5, 'gigabytes': 10000, 'working conditions': 95, 'quarter': 0}
 tech = 0
