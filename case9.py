@@ -35,10 +35,10 @@ def buying():
     else:
         print('Вы не можете столько купить, максимум:', _max)
         start.update(update1)
-
-
+print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'.format('Бетховены','Сотрудники','Магазины','Гигабайты',
+                                                               'Условия работы','Квартал'))
+print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'
+      .format(start.get('bitcoins'),start.get('staff'),start.get('shops'),start.get('gigabytes'),
+                                 start.get('working conditions'), start.get('quarter')))
 selling()
 buying()
-print(start)
-
-print('wow shit')
