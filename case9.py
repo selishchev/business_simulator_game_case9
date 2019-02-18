@@ -88,7 +88,19 @@ def salaries():
         start.update(update11)
 
 
+def random_acts():
+    
+
+
+def chance_of_act():
+    """Appearance of random acts"""
+    rand = random.randint(1, 2)
+    if rand == 1:
+        random_acts()
+
+
 def staff():
+    """Changings of staff"""
     rand = random.randint(30, 80)
     rand1 = random.randint(1, 30)
     update = {'staff': start.get('staff', []) - rand}
@@ -129,6 +141,7 @@ def loss():
 
 
 def counter():
+    """Counting quarters"""
     update = {'quarter': start.get('quarter', []) + 1}
     start.update(update)
 
@@ -142,6 +155,7 @@ investments()
 print(start)
 salaries()
 print(start)
+chance_of_act()
 random_inv()
 staff()
 print(start)
