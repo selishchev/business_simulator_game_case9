@@ -35,7 +35,6 @@ def selling():
             if amount1 < start.get('gigabytes', []):
                 start.update(update2)
             else:
-                check = False
                 print('{}'.format(ru_local.YOU_CANT), _max1)
                 start.update(update3)
         except ValueError:
@@ -59,10 +58,9 @@ def buying():
             update1 = {'bitcoins': start.get('bitcoins', []) - _max * price, 'gigabytes': start.get('gigabytes', []) + _max}
             if amount * price < start.get('gigabytes', []):
                 start.update(update)
-            else:
-                check = False
-                print('{}'.format(ru_local.CANT_BUY), _max)
-                start.update(update1)
+            else: 
+              print('{}'.format(ru_local.CANT_BUY), _max)
+              start.update(update1)
         except ValueError:
             check = False
             print('{}'.format(ru_local.PRINT_NUM))
@@ -83,7 +81,6 @@ def investments():
             if gb < _max2:
                 start.update(update4)
             else:
-                check = False
                 print('{}'.format(ru_local.CANT_INVEST), _max2)
                 start.update(update5)
         except ValueError:
@@ -106,7 +103,6 @@ def salaries():
             if sal < _max3:
                 start.update(update6)
             else:
-                check = False
                 print('{}'.format(ru_local.ERR_PAYMENT), _max3)
                 start.update(update7)
         except ValueError:
