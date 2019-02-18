@@ -1,6 +1,8 @@
 import random
+import sys
+from tkinter import *
 
-start = {'bitcoins': 10000, 'staff': 100, 'territory': 150, 'gigabytes': 10000, 'working conditions': 95, 'quarter': 0}
+start = {'bitcoins': 10000, 'staff': 100, 'shops': 5, 'gigabytes': 10000, 'working conditions': 95, 'quarter': 0}
 
 
 def selling():
@@ -56,15 +58,47 @@ def salaries():
     """Information about salaries"""
     question = 'Сколько биткойнов выделить на зарплату рабочим?'
     print(question)
+    rand0 = random.randint(31, 70)
+    rand1 = random.randint(0, 30)
     sal = int(input())
+    start1 = start.copy()
     _max3 = start.get('bitcoins', [])
     update6 = {'bitcoins': start.get('bitcoins', []) - sal}
     update7 = {'bitcoins': 0}
+    update8 = {'working conditions': start.get('working conditions', []) - rand0}
+    update9 = {'working conditions': start.get('working conditions', []) - rand1}
+    update10 = {'working conditions': start.get('working conditions', []) + rand1}
+    update11 = {'working conditions': start.get('working conditions', []) + rand0}
     if sal < _max3:
         start.update(update6)
     else:
         print('Вы не можете столько заплатить, максимум:', _max3)
         start.update(update7)
+    checking = start1.get('bitcoins', []) - start.get('bitcoins', [])
+    if 0 <= checking <= 1000:
+        start.update(update8)
+    elif 1001 <= checking <= 5000:
+        start.update(update9)
+    elif 5001 <= checking <= 8000:
+        start.update(update10)
+    elif checking >= 8001:
+        start.update(update11)
+
+
+#def randomization():
+#    """"""
+#    rand = random.randint(1, 2)
+#    if rand == 1:
+#
+#    else:
+
+
+
+def working_conditions():
+    """Checking of working conditions"""
+    if start.get('working conditions', []) <= 0:
+        print('Никто не хочет работать в вашей компании. Игра окончена.')
+        sys.exit()
 
 
 print(start)
@@ -76,3 +110,6 @@ investments()
 print(start)
 salaries()
 print(start)
+#randomization()
+working_conditions()
+
