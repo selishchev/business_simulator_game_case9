@@ -1,6 +1,6 @@
 import random
 
-start = {'bitcoins': 10000, 'staff': 100, 'shops': 5, 'gigabytes': 10000, 'working conditions': 5, 'quarter': 1}
+start = {'bitcoins': 10000, 'staff': 100, 'territory': 150, 'gigabytes': 10000, 'working conditions': 95, 'quarter': 0}
 
 
 def selling():
@@ -24,10 +24,10 @@ def selling():
 def buying():
     """Information about buying"""
     price = random.randint(20, 35)
-    sellers = 'На сегодняшний день 1 Гб информации на флешках продается за', price, 'биткойнов. Сколько Гб купить?'
+    sellers = 'На сегодняшний день 1 Гб хранилища на флешках продается за', price, 'биткойнов. Сколько Гб купить?'
     print(*sellers)
     amount = int(input())
-    _max = start.get('gigabytes', []) // price
+    _max = start.get('bitcoins', []) // price
     update = {'bitcoins': start.get('bitcoins', []) - amount * price, 'gigabytes': start.get('gigabytes', []) + amount}
     update1 = {'bitcoins': start.get('bitcoins', []) - _max * price, 'gigabytes': start.get('gigabytes', []) + _max}
     if amount * price < start.get('gigabytes', []):
@@ -35,10 +35,64 @@ def buying():
     else:
         print('Вы не можете столько купить, максимум:', _max)
         start.update(update1)
+
+def investments():
+    """Investments in new technologies"""
+    inv = 'Сколько Гб вы хотите инвестировать в разработку новых технологий?'
+    print(inv)
+    gb = int(input())
+    _max2 = start.get('gigabytes', [])
+    update4 = {'gigabytes': start.get('gigabytes', []) - gb}
+    update5 = {'gigabytes': 0}
+    if gb < _max2:
+        start.update(update4)
+    else:
+        print('Вы не можете столько инвестировать, максимум:', _max2)
+        start.update(update5)
+
+
+def salaries():
+    """Information about salaries"""
+    question = 'Сколько биткойнов выделить на зарплату рабочим?'
+    print(question)
+    sal = int(input())
+    _max3 = start.get('bitcoins', [])
+    update6 = {'bitcoins': start.get('bitcoins', []) - sal}
+    update7 = {'bitcoins': 0}
+    if sal < _max3:
+        start.update(update6)
+    else:
+        print('Вы не можете столько заплатить, максимум:', _max3)
+        start.update(update7)
+
+
 print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'.format('Бетховены','Сотрудники','Магазины','Гигабайты',
                                                                'Условия работы','Квартал'))
 print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'
       .format(start.get('bitcoins'),start.get('staff'),start.get('shops'),start.get('gigabytes'),
                                  start.get('working conditions'), start.get('quarter')))
 selling()
+print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'.format('Бетховены','Сотрудники','Магазины','Гигабайты',
+                                                               'Условия работы','Квартал'))
+print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'
+      .format(start.get('bitcoins'),start.get('staff'),start.get('shops'),start.get('gigabytes'),
+                                 start.get('working conditions'), start.get('quarter')))
 buying()
+print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'.format('Бетховены','Сотрудники','Магазины','Гигабайты',
+                                                               'Условия работы','Квартал'))
+print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'
+      .format(start.get('bitcoins'),start.get('staff'),start.get('shops'),start.get('gigabytes'),
+                                 start.get('working conditions'), start.get('quarter')))
+investments()
+print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'.format('Бетховены','Сотрудники','Магазины','Гигабайты',
+                                                               'Условия работы','Квартал'))
+print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'
+      .format(start.get('bitcoins'),start.get('staff'),start.get('shops'),start.get('gigabytes'),
+                                 start.get('working conditions'), start.get('quarter')))
+salaries()
+print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'.format('Бетховены','Сотрудники','Магазины','Гигабайты',
+                                                               'Условия работы','Квартал'))
+print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'
+      .format(start.get('bitcoins'),start.get('staff'),start.get('shops'),start.get('gigabytes'),
+                                 start.get('working conditions'), start.get('quarter')))
+
