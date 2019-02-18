@@ -104,7 +104,7 @@ def random_2():
 
 def random_3():
     gb = random.randint(700,2000)
-    print(print('{}{}{}'.format('О нет! Склад с вашими флешками ограбили! Вы потеряли', gb, 'гигабайт!')))
+    print(print('{} {} {}'.format('О нет! Склад с вашими флешками ограбили! Вы потеряли', gb, 'гигабайт!')))
     b = input('Полиция не очень охотно расследует дело. Вы можете нанять частого детектива (да/нет)')
     stolen = {'gigabytes': start.get('gigabytes') - gb}
     start.update(stolen)
@@ -169,33 +169,30 @@ def random_3():
     else:
         print('Попрощайтесь с флешками!')
 
+def random_4():
+    gb = random.randint(1000, 8000)
+    loose = {'gigabytes': start.get('gigabytes') + gb}
+    start.update(loose)
+    print('{}{}{}'.format('Ваша система подверглась заражению! Вы потеряли', gb, 'гигабайт!'))
 
-print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'.format('Бетховены','Сотрудники','Магазины','Гигабайты',
-                                                               'Условия работы','Квартал'))
-print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'
-      .format(start.get('bitcoins'),start.get('staff'),start.get('shops'),start.get('gigabytes'),
-                                 start.get('working conditions'), start.get('quarter')))
+def menu():
+    print('|{0:^12} | {1:^12} | {2:^12} | {3:^12} | {4:^12} | {5:^12}|'.format('Бетховены', 'Сотрудники', 'Магазины',
+                                                                              'Гигабайты','Условия работы', 'Квартал'))
+    print('|{0:^12} | {1:^12} | {2:^12} | {3:^12} | {4:^12} | {5:^12}|'
+          .format(start.get('bitcoins'), start.get('staff'), start.get('shops'), start.get('gigabytes'),
+                  start.get('working conditions'), start.get('quarter')))
+
+
+menu()
 selling()
-print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'.format('Бетховены','Сотрудники','Магазины','Гигабайты',
-                                                               'Условия работы','Квартал'))
-print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'
-      .format(start.get('bitcoins'),start.get('staff'),start.get('shops'),start.get('gigabytes'),
-                                 start.get('working conditions'), start.get('quarter')))
+
+menu()
 buying()
-print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'.format('Бетховены','Сотрудники','Магазины','Гигабайты',
-                                                               'Условия работы','Квартал'))
-print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'
-      .format(start.get('bitcoins'),start.get('staff'),start.get('shops'),start.get('gigabytes'),
-                                 start.get('working conditions'), start.get('quarter')))
+
+menu()
 investments()
-print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'.format('Бетховены','Сотрудники','Магазины','Гигабайты',
-                                                               'Условия работы','Квартал'))
-print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'
-      .format(start.get('bitcoins'),start.get('staff'),start.get('shops'),start.get('gigabytes'),
-                                 start.get('working conditions'), start.get('quarter')))
+
+menu()
 salaries()
-print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'.format('Бетховены','Сотрудники','Магазины','Гигабайты',
-                                                               'Условия работы','Квартал'))
-print('{0:^12} {1:^12} {2:^12} {3:^12} {4:^12} {5:^12}'
-      .format(start.get('bitcoins'),start.get('staff'),start.get('shops'),start.get('gigabytes'),
-                                 start.get('working conditions'), start.get('quarter')))
+
+menu()
