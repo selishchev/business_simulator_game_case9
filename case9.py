@@ -3,7 +3,7 @@ import sys
 from tkinter import *
 
 start = {'bitcoins': 10000, 'staff': 100, 'shops': 5, 'gigabytes': 10000, 'working conditions': 95, 'quarter': 0}
-
+tech = 0
 
 def selling():
     """Information about selling"""
@@ -41,7 +41,7 @@ def buying():
 
 def investments():
     """Investments in new technologies"""
-    inv = 'Сколько Гб вы хотите инвестировать в разработку новых технологий?'
+    inv = 'Сколько Гб вы хотите инвестировать в разработку новых информационных технологий?'
     print(inv)
     gb = int(input())
     _max2 = start.get('gigabytes', [])
@@ -49,9 +49,14 @@ def investments():
     update5 = {'gigabytes': 0}
     if gb < _max2:
         start.update(update4)
+        global tech
+        tech += gb
     else:
         print('Вы не можете столько инвестировать, максимум:', _max2)
         start.update(update5)
+        global tech
+        tech += _max2
+
 
 
 def salaries():
@@ -85,19 +90,35 @@ def salaries():
         start.update(update11)
 
 
-#def randomization():
-#    """"""
-#    rand = random.randint(1, 2)
-#    if rand == 1:
-#
-#    else:
+def staff():
 
 
+def shops():
 
-def working_conditions():
+
+def random_inv():
+    """Success of investments"""
+    rand = random.randint(1, 2)
+    rand1 = random.randint(2, 3)
+    global tech
+    update = {'gigabytes': start.get('gigabytes', []) + tech * rand1}
+    if rand == 1:
+        print('Информационные инвестиции оказались удачными в этом квартале')
+        start.update(update)
+    else:
+        print('Информационные инвестиции оказались неудачными в этом квартале')
+
+
+def loss():
     """Checking of working conditions"""
     if start.get('working conditions', []) <= 0:
         print('Никто не хочет работать в вашей компании. Игра окончена.')
+        sys.exit()
+    if start.get('shops', []) <= 0:
+        print('Все ваши магазины закрылись. Игра окончена')
+        sys.exit()
+    if start.get('staff', []) <= 0:
+        print('Все работники ушли от вас. Игра окончена')
         sys.exit()
 
 
@@ -110,6 +131,6 @@ investments()
 print(start)
 salaries()
 print(start)
-#randomization()
-working_conditions()
-
+random_inv()
+print(start)
+loss()
