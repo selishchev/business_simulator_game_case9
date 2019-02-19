@@ -405,42 +405,42 @@ def random_10():
                     print('{}'.format(ru_local.WIN))
             else:
                 print('{}'.format(ru_local.NO_BTC))
-                check = False
-                while not check:
+                check_1 = False
+                while not check_1:
                     b = input('{}'.format(ru_local.ALL)).lower()
-                    check = True
+                    check_1 = True
                     if b == '{}'.format(ru_local.YES):
                         pay1 = {'bitcoins': start.get('bitcoins') - start.get('bitcoins')}
                         start.update(pay1)
                         ch = random.randint(1, 6)
                         if ch >= 4:
-                            print('{}'.format(ru_local.NO_BTC))
+                            print('{}'.format(ru_local.NO_WIN))
                             ra = random.randint(50, 100)
                             ra1 = random.randint(1, 5)
                             update1 = {'staff': start.get('staff') - ra, 'shops': start.get('shops') - ra1,
                                        'working conditions': start.get('working conditions') - 50}
                             start.update(update1)
                         else:
-                            print('{}'.format(ru_local.NO_WIN))
+                            print('{}'.format(ru_local.WIN))
                     elif b == '{}'.format(ru_local.NO):
-                        print('{}'.format(ru_local.WIN))
+                        print('{}'.format(ru_local.NO_WIN))
                         ran = random.randint(50, 100)
                         ran1 = random.randint(1, 5)
                         up = {'staff': start.get('staff') - ran, 'shops': start.get('shops') - ran1,
                               'working conditions': start.get('working conditions') - 50}
                         start.update(up)
                     else:
-                        check = False
+                        check_1 = False
                         print('{}'.format(ru_local.YES_OR_NO))
-            if answ == '{}'.format(ru_local.NO):
-                print('{}'.format(ru_local.NO_WIN))
-                ranty = random.randint(50, 100)
-                ranty1 = random.randint(1, 5)
-                upty = {'staff': start.get('staff') - ranty, 'shops': start.get('shops') - ranty1,
-                        'working conditions': start.get('working conditions') - 50}
-                start.update(upty)
-            else:
-                check = False
+        elif answ == '{}'.format(ru_local.NO):
+            print('{}'.format(ru_local.NO_WIN))
+            ranty = random.randint(50, 100)
+            ranty1 = random.randint(1, 5)
+            upty = {'staff': start.get('staff') - ranty, 'shops': start.get('shops') - ranty1,
+                    'working conditions': start.get('working conditions') - 50}
+            start.update(upty)
+        else:
+            check = False
 
 
 def random_acts():
