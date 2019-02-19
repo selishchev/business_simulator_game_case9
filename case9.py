@@ -1,6 +1,8 @@
 import random
+import sys
 
 start = {'bitcoins': 10000, 'staff': 100, 'shops': 5, 'gigabytes': 10000, 'working conditions': 95, 'quarter': 0}
+tech = 0
 
 
 def selling():
@@ -14,7 +16,7 @@ def selling():
                'gigabytes': start.get('gigabytes', []) - amount1}
     update3 = {'bitcoins': start.get('bitcoins', []) + _max1 * price1,
                'gigabytes': start.get('gigabytes', []) - _max1}
-    if amount1 < start.get('gigabytes', []):
+    if amount1 <= start.get('gigabytes', []):
         start.update(update2)
     else:
         print('Вы не можете столько продать, максимум:', _max1)
@@ -36,34 +38,109 @@ def buying():
         print('Вы не можете столько купить, максимум:', _max)
         start.update(update1)
 
+
 def investments():
     """Investments in new technologies"""
-    inv = 'Сколько Гб вы хотите инвестировать в разработку новых технологий?'
+    inv = 'Сколько Гб вы хотите инвестировать в разработку новых информационных технологий?'
     print(inv)
     gb = int(input())
     _max2 = start.get('gigabytes', [])
     update4 = {'gigabytes': start.get('gigabytes', []) - gb}
     update5 = {'gigabytes': 0}
-    if gb < _max2:
+    if gb <= _max2:
         start.update(update4)
+        global tech
+        tech += gb
     else:
         print('Вы не можете столько инвестировать, максимум:', _max2)
         start.update(update5)
+        tech += _max2
 
 
 def salaries():
     """Information about salaries"""
     question = 'Сколько биткойнов выделить на зарплату рабочим?'
     print(question)
+    rand0 = random.randint(31, 70)
+    rand1 = random.randint(0, 30)
     sal = int(input())
+    start1 = start.copy()
     _max3 = start.get('bitcoins', [])
     update6 = {'bitcoins': start.get('bitcoins', []) - sal}
     update7 = {'bitcoins': 0}
-    if sal < _max3:
+    update8 = {'working conditions': start.get('working conditions', []) - rand0}
+    update9 = {'working conditions': start.get('working conditions', []) - rand1}
+    update10 = {'working conditions': start.get('working conditions', []) + rand1}
+    update11 = {'working conditions': start.get('working conditions', []) + rand0}
+    if sal <= _max3:
         start.update(update6)
     else:
         print('Вы не можете столько заплатить, максимум:', _max3)
         start.update(update7)
+    checking = start1.get('bitcoins', []) - start.get('bitcoins', [])
+    if 0 <= checking <= 1000:
+        start.update(update8)
+    elif 1001 <= checking <= 5000:
+        start.update(update9)
+    elif 5001 <= checking <= 8000:
+        start.update(update10)
+    elif checking >= 8001:
+        start.update(update11)
+
+
+def chance_of_act():
+    """Appearance of random acts"""
+    rand = random.randint(1, 2)
+    if rand == 1:
+        random_acts()
+
+
+def staff():
+    """Changings of staff"""
+    rand = random.randint(30, 80)
+    rand1 = random.randint(1, 30)
+    update = {'staff': start.get('staff', []) - rand}
+    update1 = {'staff': start.get('staff', []) - rand1}
+    update2 = {'staff': start.get('staff', []) + rand}
+    if start.get('working conditions', []) <= 40:
+        start.update(update)
+    elif 41 <= start.get('working conditions', []) <= 80:
+        start.update(update1)
+    elif 100 <= start.get('working conditions', []):
+        start.update(update2)
+
+
+def random_inv():
+    """Success of investments"""
+    rand = random.randint(1, 2)
+    rand1 = random.randint(2, 3)
+    global tech
+    update = {'gigabytes': start.get('gigabytes', []) + tech * rand1}
+    if rand == 1:
+        print('Информационные инвестиции оказались удачными в этом квартале')
+        start.update(update)
+    else:
+        print('Информационные инвестиции оказались неудачными в этом квартале')
+
+
+def loss():
+    """Checking of working conditions"""
+    if start.get('working conditions', []) <= 0:
+        print('Никто не хочет работать в вашей компании. Игра окончена.')
+        sys.exit()
+    if start.get('shops', []) <= 0:
+        print('Все ваши магазины закрыты. Игра окончена')
+        sys.exit()
+    if start.get('staff', []) <= 0:
+        print('Все работники ушли от вас. Игра окончена')
+        sys.exit()
+
+
+def counter():
+    """Counting quarters"""
+    update = {'quarter': start.get('quarter', []) + 1}
+    start.update(update)
+
 
 def random_1():
     situation = 'К вам с проверкой пришли из МВД,  и непрозрачно намекают на взятку. Сколько биткоинов им дать?'
@@ -86,10 +163,12 @@ def random_1():
         print('Вы не можете столько инвестировать, максимум:', _max3)
         start.update(update7)
 
+
 def random_2():
-    gb = random.randint(100,500)
-    low_cond = random.randint(5,10)
-    print('{}{}{}'.format('У вас на складе скопилось', gb, 'неиспользованных гигабайт. Раздать рабочим?(напишите да или нет'))
+    gb = random.randint(100, 500)
+    low_cond = random.randint(5, 10)
+    print('{} {} {}'.format('У вас на складе скопилось', gb,
+                          'неиспользованных гигабайт. Раздать рабочим?(напишите да или нет'))
     answer = input()
     if answer == 'да':
         cond = {'working conditions': start.get('working conditions', []) + low_cond}
@@ -102,9 +181,10 @@ def random_2():
         print('Сотрудники узнали, что вы жмот!')
         start.update(cond1)
 
+
 def random_3():
-    gb = random.randint(700,2000)
-    print(print('{} {} {}'.format('О нет! Склад с вашими флешками ограбили! Вы потеряли', gb, 'гигабайт!')))
+    gb = random.randint(700, 2000)
+    print('{} {} {}'.format('О нет! Склад с вашими флешками ограбили! Вы потеряли', gb, 'гигабайт!'))
     b = input('Полиция не очень охотно расследует дело. Вы можете нанять частого детектива (да/нет)')
     stolen = {'gigabytes': start.get('gigabytes') - gb}
     start.update(stolen)
@@ -123,7 +203,7 @@ def random_3():
         if c == 1:
             cost1 = {'bitcoins': start.get('bitcoins', []) - 4000}
             start.update(cost1)
-            d = random.randint(1,6)
+            d = random.randint(1, 6)
             if d == 6:
                 print('К сожалению Борис Грачевский посадил в тюрьму слишком серьёзных людей.\nНа него было совершено '
                       'покушение и он скончался в больнице.\nВаше дело он не закончил.')
@@ -135,7 +215,7 @@ def random_3():
         elif c == 2:
             cost2 = {'bitcoins': start.get('bitcoins', []) - 2000}
             start.update(cost2)
-            e = random.randint(1,6)
+            e = random.randint(1, 6)
             if e >= 5:
                 back2 = {'gigabytes': start.get('gigabytes') + 40}
                 start.update(back2)
@@ -143,7 +223,7 @@ def random_3():
                       'со своим нежеланием работать на благо мировой паутины, злоумышленники успели сбыть\n'
                       'весь товар. На их базе было найдено только 4 флешки.')
             elif e == 4:
-                back3 = {'gigabytes': start.get('gigabytes') + gb/2}
+                back3 = {'gigabytes': start.get('gigabytes') + gb / 2}
                 start.update(back3)
                 print('Дело раскрыли слишком поздно и половину ваших флешек успели сбыть.')
             else:
@@ -153,7 +233,7 @@ def random_3():
         else:
             cost3 = {'bitcoins': start.get('bitcoins', []) - 202}
             start.update(cost3)
-            f = random.randint(1,6)
+            f = random.randint(1, 6)
             if f >= 3:
                 bn = {'bitcoins': start.get('bitcoins', []) + 200}
                 start.update(bn)
@@ -169,42 +249,140 @@ def random_3():
     else:
         print('Попрощайтесь с флешками!')
 
+
 def random_4():
     gb = random.randint(1000, 8000)
-    loose = {'gigabytes': start.get('gigabytes') + gb}
+    loose = {'gigabytes': start.get('gigabytes') - gb}
     start.update(loose)
-    print('{}{}{}'.format('Ваша система подверглась заражению! Вы потеряли', gb, 'гигабайт!'))
-    
+    print('{} {} {}'.format('Ваша система подверглась заражению! Вы потеряли', gb, 'гигабайт!'))
+
+
 def random_5():
-    gb = random.randint(500,1000)
+    gb = random.randint(500, 1000)
     loose = {'gigabytes': start.get('gigabytes') - gb}
     start.update(loose)
     print('{} {} {}'.format('К вам приехала бракованная партия флешек! Вы потеряли', gb, 'гигабайт'))
+
 
 def random_6():
     take = {'gigabytes': start.get('gigabytes') + 1000}
     start.update(take)
     print('Сюрприз! Ваши партнёры из Мвидео поздравили вас с годом плодотворного сотрудничества и подарили 1000 Гб')
 
+def random_7():
+    bit = random.randrange(5000,35000,100)
+    print('{} {} {}''Прекрасные новости! Освободилось место, которое вы давно присматривали для своего магазина.\n'
+          'Стоимость -', bit, 'биткоинов')
+    b = input('Покупаете?(да/нет):')
+    if b == 'да':
+        take = {'bitcoins': start.get('bitcoins', []) - bit}
+        start.update(take)
+        print('Поздравляем с покупкой!')
+
+def random_8():
+    print('Один из ваших магазинов подвергся рекетскому нападению, вы теряете магазин. Ничего не поделаешь\n'
+          'в такое уж время мы живём((')
+    b = {'shops': start.get('shops', []) - 1}
+    start.update(b)
+
+def random_9():
+    print('Умер ваш богатый родственник...\n'
+          'В завещании написано, что все деньги достаются вам!')
+    bill = {'bitcoins':start.get('bitcoins')+10000}
+    start.update(bill)
+
+def random_10():
+    cost = random.randrange(10000, 30000, 100)
+    print('На вас подали в суд за пиратство! Придётся нанять адвоката!')
+    print('Стоимость его услуг - ', cost)
+    answ = input('Нанять адвоката?(да/нет)')
+    if answ == 'да':
+        if start.get('bitcoins') >= cost:
+            chance = random.randint(1,6)
+            pay = {'bitcoins':start.get('bitcoins') - cost}
+            start.update(pay)
+            if chance >=4:
+                print('Вы проиграли дело!')
+                rand = random.randint(50, 100)
+                rand1 = random.randint(1, 5)
+                update1 = {'staff': start.get('staff') - rand, 'shops': start.get('shops') - rand1,
+                           'working conditions': start.get('working conditions') - 50}
+            else:
+                print('Вы выиграли дело!')
+        else:
+            print('У вас недостаточно биткоинов')
+            b = input('Вложить все оставшиеся в адвоката?')
+            if b == 'да':
+                pay1 = {'bitcoins': start.get('bitcoins') - start.get('bitcoins')}
+                start.update(pay1)
+                ch = random.randint(1,6)
+                if ch >=4:
+                    print('Вы проиграли дело!')
+                    ra = random.randint(50, 100)
+                    ra1 = random.randint(1, 5)
+                    update1 = {'staff': start.get('staff') - ra, 'shops': start.get('shops') - ra1,
+                           'working conditions': start.get('working conditions') - 50}
+                    start.update(update1)
+                else:
+                    print('Вы выиграли дело!')
+            elif b == 'нет':
+                print('Вы проиграли дело!')
+                ran = random.randint(50, 100)
+                ran1 = random.randint(1, 5)
+                up = {'staff': start.get('staff') - ran, 'shops': start.get('shops') - ran1,
+                           'working conditions': start.get('working conditions') - 50}
+                start.update(up)
+    if answ == 'нет':
+        print('Вы проиграли дело!')
+        ranty = random.randint(50, 100)
+        ranty1 = random.randint(1, 5)
+        upty = {'staff': start.get('staff') - ranty, 'shops': start.get('shops') - ranty1,
+              'working conditions': start.get('working conditions') - 50}
+        start.update(upty)
+
+def random_acts():
+    rand = random.randint(1, 10)
+    if rand == 1:
+        random_1()
+    elif rand == 2:
+        random_2()
+    elif rand == 3:
+        random_3()
+    elif rand == 4:
+        random_4()
+    elif rand == 5:
+        random_5()
+    elif rand == 6:
+        random_6()
+    elif rand == 7:
+        random_7()
+    elif rand == 8:
+        random_8()
+    elif rand == 9:
+        random_9()
+    elif rand == 10:
+        random_10()
 def menu():
-    print('|{0:^12} | {1:^12} | {2:^12} | {3:^12} | {4:^12} | {5:^12}|'.format('Бетховены', 'Сотрудники', 'Магазины',
-                                                                              'Гигабайты','Условия работы', 'Квартал'))
-    print('|{0:^12} | {1:^12} | {2:^12} | {3:^12} | {4:^12} | {5:^12}|'
+    print('|{0:^12} | {1:^12} | {2:^12} | {3:^12} | {4:^12} | {5:^12}|'.format('Биткойны', 'Сотрудники', 'Магазины',
+                                                                               'Гигабайты', 'Условия работы',
+                                                                               'Квартал'))
+    print('|{0:^12} | {1:^12} | {2:^12} | {3:^12} | {4:^14} | {5:^12}|'
           .format(start.get('bitcoins'), start.get('staff'), start.get('shops'), start.get('gigabytes'),
                   start.get('working conditions'), start.get('quarter')))
 
 
 menu()
 selling()
-
 menu()
 buying()
-
 menu()
 investments()
-
 menu()
 salaries()
-
 menu()
-
+chance_of_act()
+random_inv()
+staff()
+menu()
+loss()
+counter()
