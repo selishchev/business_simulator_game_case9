@@ -209,7 +209,7 @@ def random_1():
     while not check:
         try:
             money = int(input())
-            check = False
+            check = True
             _max3 = start.get('bitcoins', [])
             update6 = {'bitcoins': start.get('bitcoins', []) - money}
             update7 = {'bitcoins': 0}
