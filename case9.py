@@ -5,7 +5,6 @@ start = {'bitcoins': 10000, 'staff': 100, 'shops': 5, 'gigabytes': 10000, 'worki
 tech = 0
 
 
-
 def selling():
     """Information about selling"""
     price1 = random.randint(20, 35)
@@ -33,11 +32,12 @@ def buying():
     _max = start.get('bitcoins', []) // price
     update = {'bitcoins': start.get('bitcoins', []) - amount * price, 'gigabytes': start.get('gigabytes', []) + amount}
     update1 = {'bitcoins': start.get('bitcoins', []) - _max * price, 'gigabytes': start.get('gigabytes', []) + _max}
-    if amount * price < start.get('gigabytes', []):
+    if amount * price < start.get('bitcoins', []):
         start.update(update)
     else:
         print('Вы не можете столько купить, максимум:', _max)
         start.update(update1)
+
 
 def investments():
     """Investments in new technologies"""
@@ -61,8 +61,9 @@ def salaries():
     """Information about salaries"""
     question = 'Сколько биткойнов выделить на зарплату рабочим?'
     print(question)
-    rand0 = random.randint(31, 70)
+    rand0 = random.randint(50, 100)
     rand1 = random.randint(0, 30)
+    rand2 = random.randint(30, 50)
     sal = int(input())
     start1 = start.copy()
     _max3 = start.get('bitcoins', [])
@@ -71,7 +72,8 @@ def salaries():
     update8 = {'working conditions': start.get('working conditions', []) - rand0}
     update9 = {'working conditions': start.get('working conditions', []) - rand1}
     update10 = {'working conditions': start.get('working conditions', []) + rand1}
-    update11 = {'working conditions': start.get('working conditions', []) + rand0}
+    update11 = {'working conditions': start.get('working conditions', []) + rand2}
+    update12 = {'working conditions': 100}
     if sal <= _max3:
         start.update(update6)
     else:
@@ -82,21 +84,23 @@ def salaries():
         start.update(update8)
     elif 1001 <= checking <= 5000:
         start.update(update9)
-    elif 5001 <= checking <= 8000:
+    elif 5001 <= checking <= 10000:
         start.update(update10)
-    elif checking >= 8001:
+    elif checking >= 10001:
         start.update(update11)
-    
+    if start.get('working conditions', []) > 100:
+        start.update(update12)
+
 
 def chance_of_act():
     """Appearance of random acts"""
-    rand = random.randint(1, 2)
-    if rand == 1:
+    rand = random.randint(1, 3)
+    if rand >= 2:
         random_acts()
 
 
 def staff():
-    """Changings of staff"""
+    """Changing of staff"""
     rand = random.randint(30, 80)
     rand1 = random.randint(1, 30)
     update = {'staff': start.get('staff', []) - rand}
@@ -119,20 +123,38 @@ def random_inv():
     if rand == 1:
         print('Информационные инвестиции оказались удачными в этом квартале')
         start.update(update)
+        tech = 0
     else:
         print('Информационные инвестиции оказались неудачными в этом квартале')
+        tech = 0
+
+
+def gbs():
+    rand = random.randint(50, 100)
+    rand1 = random.randint(1, 5)
+    update = {'gigabytes': 0}
+    update1 = {'staff': start.get('staff') - rand, 'shops': start.get('shops') - rand1,
+               'working conditions': start.get('working conditions') - 50}
+    if start.get('gigabytes', []) < 0:
+        start.update(update)
+    if start.get('gigabytes', []) == 0:
+        print('Вы терпите большие убытки в связи с отсутствием вашего продукта(Гигабайт)! Срочно нужны закупки!')
+        start.update(update1)
 
 
 def loss():
-    """Checking of working conditions"""
+    """Checking of conditions of loss"""
     if start.get('working conditions', []) <= 0:
         print('Никто не хочет работать в вашей компании. Игра окончена.')
+        menu()
         sys.exit()
     if start.get('shops', []) <= 0:
         print('Все ваши магазины закрыты. Игра окончена')
+        menu()
         sys.exit()
     if start.get('staff', []) <= 0:
         print('Все работники ушли от вас. Игра окончена')
+        menu()
         sys.exit()
 
 
@@ -141,13 +163,13 @@ def counter():
     update = {'quarter': start.get('quarter', []) + 1}
     start.update(update)
 
-    
+
 def random_1():
     situation = 'К вам с проверкой пришли из МВД,  и непрозрачно намекают на взятку. Сколько биткоинов им дать?'
     print(situation)
     money = int(input())
     _max3 = start.get('bitcoins', [])
-    update6 = {'bitcoins': start.get('bitcoins', []) - sal}
+    update6 = {'bitcoins': start.get('bitcoins', []) - money}
     update7 = {'bitcoins': 0}
     minimum = start.get('bitcoins', []) * 0.1
     if money < _max3:
@@ -163,11 +185,12 @@ def random_1():
         print('Вы не можете столько инвестировать, максимум:', _max3)
         start.update(update7)
 
-        
+
 def random_2():
-    gb = random.randint(100,500)
-    low_cond = random.randint(5,10)
-    print('{}{}{}'.format('У вас на складе скопилось', gb, 'неиспользованных гигабайт. Раздать рабочим?(напишите да или нет'))
+    gb = random.randint(100, 500)
+    low_cond = random.randint(5, 10)
+    print('{}{}{}'.format('У вас на складе скопилось', gb,
+                          'неиспользованных гигабайт. Раздать рабочим?(напишите да или нет'))
     answer = input()
     if answer == 'да':
         cond = {'working conditions': start.get('working conditions', []) + low_cond}
@@ -180,29 +203,29 @@ def random_2():
         print('Сотрудники узнали, что вы жмот!')
         start.update(cond1)
 
-        
+
 def random_3():
-    gb = random.randint(700,2000)
-    print(print('{} {} {}'.format('О нет! Склад с вашими флешками ограбили! Вы потеряли', gb, 'гигабайт!')))
+    gb = random.randint(1000, 2000)
+    print('{} {} {}'.format('О нет! Склад с вашими флешками ограбили! Вы потеряли', gb, 'гигабайт!'))
     b = input('Полиция не очень охотно расследует дело. Вы можете нанять частого детектива (да/нет)')
     stolen = {'gigabytes': start.get('gigabytes') - gb}
     start.update(stolen)
     if b == 'да':
         print('Вам предлагается выбор из 3ёх детективов.')
         print('1. Борис Грачевский. Профессионал своего дела, выгнали из участка из-за излишней профессиональности.\n '
-              'Гроза преступного мира, известный как "Бетмен за лупой".\nЦена за услуги 4000 бетховенов.')
+              'Гроза преступного мира, известный как "Бетмен за лупой".\nЦена за услуги 15000 бетховенов.')
         print('2. Леонид Перевалов. Бывший морпех, агрессивный, не всегда устойчив психикой, но если дело его\n '
               'заинтересует можете быть уверенны в его выполнении. Имеет судимость по статье о продаже наркотиков.\n'
-              'Сам Леонид отрицает решение суда о признании его виновным.\nЦена за услуги 2000 бетховенов.')
+              'Сам Леонид отрицает решение суда о признании его виновным.\nЦена за услуги 5000 бетховенов.')
         print('3. Никита Скоробей. Студент факультета естественных наук, оставивший предложение на YouDo.\n'
               'Участник шоу "Битва экстрасенсов". В университете Никиту считают странным. В детстве увлекался\n'
               ' дедукцией и вполне успешно расследовал преступления по заказу местных пивнушек.\n'
               'Цена за услуги 200 бетховенов и полторы бутылочки пива.')
         c = int(input('Напишите номер выбранного детектива:'))
         if c == 1:
-            cost1 = {'bitcoins': start.get('bitcoins', []) - 4000}
+            cost1 = {'bitcoins': start.get('bitcoins', []) - 15000}
             start.update(cost1)
-            d = random.randint(1,6)
+            d = random.randint(1, 6)
             if d == 6:
                 print('К сожалению Борис Грачевский посадил в тюрьму слишком серьёзных людей.\nНа него было совершено '
                       'покушение и он скончался в больнице.\nВаше дело он не закончил.')
@@ -212,9 +235,9 @@ def random_3():
                 print('Борис Грачевский за 9 минут раскрыл ваше дело и вышел на мафиозного авторитета.\n'
                       'Все ваши гигабайты вернулись')
         elif c == 2:
-            cost2 = {'bitcoins': start.get('bitcoins', []) - 2000}
+            cost2 = {'bitcoins': start.get('bitcoins', []) - 5000}
             start.update(cost2)
-            e = random.randint(1,6)
+            e = random.randint(1, 6)
             if e >= 5:
                 back2 = {'gigabytes': start.get('gigabytes') + 40}
                 start.update(back2)
@@ -222,7 +245,7 @@ def random_3():
                       'со своим нежеланием работать на благо мировой паутины, злоумышленники успели сбыть\n'
                       'весь товар. На их базе было найдено только 4 флешки.')
             elif e == 4:
-                back3 = {'gigabytes': start.get('gigabytes') + gb/2}
+                back3 = {'gigabytes': start.get('gigabytes') + gb / 2}
                 start.update(back3)
                 print('Дело раскрыли слишком поздно и половину ваших флешек успели сбыть.')
             else:
@@ -232,7 +255,7 @@ def random_3():
         else:
             cost3 = {'bitcoins': start.get('bitcoins', []) - 202}
             start.update(cost3)
-            f = random.randint(1,6)
+            f = random.randint(1, 6)
             if f >= 3:
                 bn = {'bitcoins': start.get('bitcoins', []) + 200}
                 start.update(bn)
@@ -248,27 +271,27 @@ def random_3():
     else:
         print('Попрощайтесь с флешками!')
 
-        
+
 def random_4():
     gb = random.randint(1000, 8000)
-    loose = {'gigabytes': start.get('gigabytes') + gb}
+    loose = {'gigabytes': start.get('gigabytes') - gb}
     start.update(loose)
-    print('{}{}{}'.format('Ваша система подверглась заражению! Вы потеряли', gb, 'гигабайт!'))
-    
-    
+    print('{} {} {}'.format('Ваша система подверглась заражению! Вы потеряли', gb, 'гигабайт!'))
+
+
 def random_5():
-    gb = random.randint(500,1000)
+    gb = random.randint(500, 1000)
     loose = {'gigabytes': start.get('gigabytes') - gb}
     start.update(loose)
     print('{} {} {}'.format('К вам приехала бракованная партия флешек! Вы потеряли', gb, 'гигабайт'))
 
-    
+
 def random_6():
     take = {'gigabytes': start.get('gigabytes') + 1000}
     start.update(take)
     print('Сюрприз! Ваши партнёры из Мвидео поздравили вас с годом плодотворного сотрудничества и подарили 1000 Гб')
 
-    
+
 def random_acts():
     rand = random.randint(1, 6)
     if rand == 1:
@@ -284,27 +307,35 @@ def random_acts():
     elif rand == 6:
         random_6()
 
-  
+
 def menu():
     print('|{0:^12} | {1:^12} | {2:^12} | {3:^12} | {4:^12} | {5:^12}|'.format('Биткойны', 'Сотрудники', 'Магазины',
-                                                                              'Гигабайты','Условия работы', 'Квартал'))
-    print('|{0:^12} | {1:^12} | {2:^12} | {3:^12} | {4:^12} | {5:^12}|'
+                                                                               'Гигабайты', 'Условия работы',
+                                                                               'Квартал'))
+    print('|{0:^12} | {1:^12} | {2:^12} | {3:^12} | {4:^14} | {5:^12}|'
           .format(start.get('bitcoins'), start.get('staff'), start.get('shops'), start.get('gigabytes'),
                   start.get('working conditions'), start.get('quarter')))
 
 
-menu()
-selling()
-menu()
-buying()
-menu()
-investments()
-menu()
-salaries()
-menu()
-chance_of_act()
-random_inv()
-staff()
-menu()
-loss()
-counter()
+def main():
+    menu()
+    while True:
+        selling()
+        menu()
+        buying()
+        menu()
+        investments()
+        menu()
+        salaries()
+        menu()
+        chance_of_act()
+        random_inv()
+        staff()
+        gbs()
+        loss()
+        counter()
+        menu()
+
+
+if __name__ == '__main__':
+    main()
