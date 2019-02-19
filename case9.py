@@ -189,7 +189,7 @@ def random_1():
 def random_2():
     gb = random.randint(100, 500)
     low_cond = random.randint(5, 10)
-    print('{}{}{}'.format('У вас на складе скопилось', gb,
+    print('{} {} {}'.format('У вас на складе скопилось', gb,
                           'неиспользованных гигабайт. Раздать рабочим?(напишите да или нет'))
     answer = input()
     if answer == 'да':
@@ -291,9 +291,80 @@ def random_6():
     start.update(take)
     print('Сюрприз! Ваши партнёры из Мвидео поздравили вас с годом плодотворного сотрудничества и подарили 1000 Гб')
 
+    
+def random_7():
+    bit = random.randrange(5000,35000,100)
+    print('{} {} {}''Прекрасные новости! Освободилось место, которое вы давно присматривали для своего магазина.\n'
+          'Стоимость -', bit, 'биткоинов')
+    b = input('Покупаете?(да/нет):')
+    if b == 'да':
+        take = {'bitcoins': start.get('bitcoins', []) - bit}
+        start.update(take)
+        print('Поздравляем с покупкой!')
+
+def random_8():
+    print('Один из ваших магазинов подвергся рекетскому нападению, вы теряете магазин. Ничего не поделаешь\n'
+          'в такое уж время мы живём((')
+    b = {'shops': start.get('shops', []) - 1}
+    start.update(b)
+
+def random_9():
+    print('Умер ваш богатый родственник...\n'
+          'В завещании написано, что все деньги достаются вам!')
+    bill = {'bitcoins':start.get('bitcoins')+10000}
+    start.update(bill)
+
+def random_10():
+    cost = random.randrange(10000, 30000, 100)
+    print('На вас подали в суд за пиратство! Придётся нанять адвоката!')
+    print('Стоимость его услуг - ', cost)
+    answ = input('Нанять адвоката?(да/нет)')
+    if answ == 'да':
+        if start.get('bitcoins') >= cost:
+            chance = random.randint(1,6)
+            pay = {'bitcoins':start.get('bitcoins') - cost}
+            start.update(pay)
+            if chance >=4:
+                print('Вы проиграли дело!')
+                rand = random.randint(50, 100)
+                rand1 = random.randint(1, 5)
+                update1 = {'staff': start.get('staff') - rand, 'shops': start.get('shops') - rand1,
+                           'working conditions': start.get('working conditions') - 50}
+            else:
+                print('Вы выиграли дело!')
+        else:
+            print('У вас недостаточно биткоинов')
+            b = input('Вложить все оставшиеся в адвоката?')
+            if b == 'да':
+                pay1 = {'bitcoins': start.get('bitcoins') - start.get('bitcoins')}
+                start.update(pay1)
+                ch = random.randint(1,6)
+                if ch >=4:
+                    print('Вы проиграли дело!')
+                    ra = random.randint(50, 100)
+                    ra1 = random.randint(1, 5)
+                    update1 = {'staff': start.get('staff') - ra, 'shops': start.get('shops') - ra1,
+                           'working conditions': start.get('working conditions') - 50}
+                    start.update(update1)
+                else:
+                    print('Вы выиграли дело!')
+            elif b == 'нет':
+                print('Вы проиграли дело!')
+                ran = random.randint(50, 100)
+                ran1 = random.randint(1, 5)
+                up = {'staff': start.get('staff') - ran, 'shops': start.get('shops') - ran1,
+                           'working conditions': start.get('working conditions') - 50}
+                start.update(up)
+    if answ == 'нет':
+        print('Вы проиграли дело!')
+        ranty = random.randint(50, 100)
+        ranty1 = random.randint(1, 5)
+        upty = {'staff': start.get('staff') - ranty, 'shops': start.get('shops') - ranty1,
+              'working conditions': start.get('working conditions') - 50}
+        start.update(upty)
 
 def random_acts():
-    rand = random.randint(1, 6)
+    rand = random.randint(1, 10)
     if rand == 1:
         random_1()
     elif rand == 2:
@@ -306,8 +377,14 @@ def random_acts():
         random_5()
     elif rand == 6:
         random_6()
-
-
+    elif rand == 7:
+        random_7()
+    elif rand == 8:
+        random_8()
+    elif rand == 9:
+        random_9()
+    elif rand == 10:
+        random_10()
 def menu():
     print('|{0:^12} | {1:^12} | {2:^12} | {3:^12} | {4:^12} | {5:^12}|'.format('Биткойны', 'Сотрудники', 'Магазины',
                                                                                'Гигабайты', 'Условия работы',
